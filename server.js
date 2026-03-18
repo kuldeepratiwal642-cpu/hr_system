@@ -19,8 +19,8 @@ mongoose.connect("mongodb+srv://kr:Kuldeep%40123@cluster0.2cyiro9.mongodb.net/?a
         const User = require('./models/User');
         const bcrypt = require('bcryptjs');
 
-        const adminEmail = admin@example.com;
-        const adminPassword = Admin@123;
+        const adminEmail = "admin@example.com";
+        const adminPassword = "Admin@123";
 
         if (!adminEmail || !adminPassword) {
             console.log("⚠️ Admin credentials not provided in .env");
