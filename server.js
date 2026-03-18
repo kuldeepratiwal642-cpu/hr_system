@@ -11,7 +11,7 @@ app.use(express.json());
 
 console.log(process.env.MONGO_URI)
 // ✅ Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect("mongodb+srv://kr:Kuldeep%40123@cluster0.2cyiro9.mongodb.net/?appName=Cluster0")
     .then(async () => {
         console.log('MongoDB connected');
 
@@ -19,8 +19,8 @@ mongoose.connect(process.env.MONGO_URI)
         const User = require('./models/User');
         const bcrypt = require('bcryptjs');
 
-        const adminEmail = process.env.ADMIN_EMAIL;
-        const adminPassword = process.env.ADMIN_PASSWORD;
+        const adminEmail = admin@example.com;
+        const adminPassword = Admin@123;
 
         if (!adminEmail || !adminPassword) {
             console.log("⚠️ Admin credentials not provided in .env");
@@ -55,5 +55,5 @@ app.use('/api/attendance', require('./routes/attendance'));
 app.use('/api/admin', require('./routes/admin'));
 
 // ✅ Server
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
