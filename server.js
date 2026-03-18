@@ -5,17 +5,32 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const app = express();
-app.use(cors());
+const app = express();const allowedOrigins = [
+  'https://hr-system-frontend-seven.vercel.app', //  frontend
+  'http://localhost:5000', 
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // allow cookies / Authorization headers
+}));
 app.use(express.json());
 
 console.log(process.env.MONGO_URI)
-// ✅ Connect to MongoDB
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
     .then(async () => {
         console.log('MongoDB connected');
 
-        // ✅ Seed admin user (SAFE VERSION)
+        // Seed admin user (SAFE VERSION)
         const User = require('./models/User');
         const bcrypt = require('bcryptjs');
 
@@ -41,19 +56,19 @@ mongoose.connect(process.env.MONGO_URI)
             });
 
             await admin.save();
-            console.log('✅ Admin user seeded');
+            console.log(' Admin user seeded');
         } else {
-            console.log('ℹ️ Admin already exists');
+            console.log(' Admin already exists');
         }
     })
     .catch(err => console.log(err));
 
-// ✅ Routes
+//  Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/leave', require('./routes/leave'));
 app.use('/api/attendance', require('./routes/attendance'));
 app.use('/api/admin', require('./routes/admin'));
 
-// ✅ Server
+//  Server
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
