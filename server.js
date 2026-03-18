@@ -5,23 +5,9 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const app = express();const allowedOrigins = [
-  'https://hr-system-frontend-seven.vercel.app', //  frontend
-  'http://localhost:5000', 
-];
+const app = express();
 
-app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, // allow cookies / Authorization headers
-}));
+app.use(cors());
 app.use(express.json());
 
 console.log(process.env.MONGO_URI)
